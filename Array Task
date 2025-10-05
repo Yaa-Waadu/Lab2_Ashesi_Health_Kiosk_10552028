@@ -1,0 +1,104 @@
+import java.util.Arrays;
+
+public class Friday3Oct {
+    public static void main(String[] args) {
+        int[] array1 = {2, 5, 8, 3, 4, 6, 10, 15, 20, 1, 11};
+
+        // 1. Identify index of a given value
+        int value = 10;
+        int index = findIndex(array1, value);
+        System.out.println("Index of value " + value + " = " + index);
+
+        // 2. Swap two values
+        System.out.println("\nBefore swap: " + Arrays.toString(array1));
+        swap(array1, 0, 5);  
+        System.out.println("After swap:  " + Arrays.toString(array1));
+
+        // 3. Sort array in ascending order
+        int[] ascArray = array1.clone();
+        bubbleSortAscending(ascArray);
+        System.out.println("\nSorted Ascending: " + Arrays.toString(ascArray));
+
+        // 3b. Sort array in descending order
+        int[] descArray = array1.clone();
+        bubbleSortDescending(descArray);
+        System.out.println("Sorted Descending: " + Arrays.toString(descArray));
+
+        // 4. Linear search
+        int target = 15;
+        int linIndex = linearSearch(array1, target);
+        System.out.println("\nLinear Search: Value " + target + " found at index " + linIndex);
+
+        // 5. Binary search (array must be sorted first)
+        Arrays.sort(array1);
+        int binIndex = binarySearch(array1, target);
+        System.out.println("Binary Search (sorted array): Value " + target + " found at index " + binIndex);
+    }
+
+    // 1. Find index of a value
+    public static int findIndex(int[] arr, int value) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == value) return i;
+        }
+        return -1; 
+    }
+
+    // 2. Swap two values
+    public static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    // 3a. Bubble sort ascending
+    public static void bubbleSortAscending(int[] arr) {
+        int n = arr.length;
+        boolean swapped;
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
+                    swapped = true;
+                }
+            }
+            if (!swapped) break; 
+        }
+    }
+
+    // 3b. Bubble sort descending
+    public static void bubbleSortDescending(int[] arr) {
+        int n = arr.length;
+        boolean swapped;
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false;
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (arr[j] < arr[j + 1]) { 
+                    swap(arr, j, j + 1);
+                    swapped = true;
+                }
+            }
+            if (!swapped) break;
+        }
+    }
+
+    // 4. Linear search
+    public static int linearSearch(int[] arr, int target) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == target) return i;
+        }
+        return -1;
+    }
+
+    // 5. Binary search (array must be sorted)
+    public static int binarySearch(int[] arr, int target) {
+        int low = 0, high = arr.length - 1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (arr[mid] == target) return mid;
+            if (arr[mid] < target) low = mid + 1;
+            else high = mid - 1;
+        }
+        return -1;
+    }
+}
